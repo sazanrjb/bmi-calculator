@@ -1,48 +1,46 @@
 <template>
-    <div class="columns is-mobile is-centered">
-        <div class="column is-half card" :style="bmiStyle">
-            <div class="card-header-title">BMI Calculator</div>
-    <form @submit.prevent="submit" class="card-content">
-            <div class="field">
-                <div class="control">
-                    <label class="label">Height</label>
-                    Feet <input type="radio" value='feet' name='heightUnit' v-model="formData.heightUnit">
-                    Centimeters <input type="radio" value='centimeters' name="heightUnit" v-model="formData.heightUnit">
-
-                    <div v-if="isFeet">
-                        <input class="input" type="number" name="feet" v-model="formData.feet" placeholder="Feet">
-                        <input class="input" type="number" name="inches" v-model="formData.inches" placeholder="Inches">
-                    </div>
-                    <div v-else>
-                        <input class="input" type="number" name="centimeters" v-model="formData.centimeters" placeholder="Centimeters">
-                    </div>
-                    <label v-show="errors.height">{{ errors.height }}</label>
-                </div>
-            </div>
+  <div class="columns is-centered">
+    <div class="column is-half card" :style="bmiStyle">
+      <div class="card-header-title is-centered is-size-4">BMI Calculator</div>
+      <form @submit.prevent="submit" class="card-content">
         <div class="field">
-            <div class="control">
-                <label class="label">Weight</label>
-                Kilograms <input type="radio" value='kilograms' name='weightUnit' v-model="formData.weightUnit">
-                Pounds <input type="radio" value='pounds' name="weightUnit" v-model="formData.weightUnit">
-                <div>
-                    <input class="input" type="number" name="weight" v-model="formData.weight" :placeholder="isKilograms ? 'Kilograms' : 'Pounds'">
-                </div>
-                <label v-show="errors.weight">{{ errors.weight }}</label>
+          <div class="control">
+            <label class="label">Height</label>
+            Feet <input type="radio" value='feet' name='heightUnit' v-model="formData.heightUnit"> Centimeters <input type="radio" value='centimeters' name="heightUnit" v-model="formData.heightUnit">
+
+            <div v-if="isFeet">
+              <input class="input" type="number" name="feet" v-model="formData.feet" placeholder="Feet">
+              <input class="input" type="number" name="inches" v-model="formData.inches" placeholder="Inches">
             </div>
+            <div v-else>
+              <input class="input" type="number" name="centimeters" v-model="formData.centimeters" placeholder="Centimeters">
+            </div>
+            <label v-show="errors.height" class="is-size-7 has-text-danger">{{ errors.height }}</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="label">Weight</label>
+            Kilograms <input type="radio" value='kilograms' name='weightUnit' v-model="formData.weightUnit"> Pounds <input type="radio" value='pounds' name="weightUnit" v-model="formData.weightUnit">
+            <div>
+              <input class="input" type="number" name="weight" v-model="formData.weight" :placeholder="isKilograms ? 'Kilograms' : 'Pounds'">
+            </div>
+            <label v-show="errors.weight" class="is-size-7 has-text-danger">{{ errors.weight }}</label>
+          </div>
         </div>
         <div>
-            <div class="control">
-                <button class="button is-primary">Submit</button>
-                <button class="button" type="button" @click="reset">Reset</button>
-            </div>
-        </div>
+          <div class="control">
+            <button class="button is-primary">Submit</button>&nbsp;
+            <button class="button" type="button" @click="reset">Reset</button>
+          </div>
+        </div><br>
         <div v-if="this.result">
-            <label class="label">RESULT: {{this.result}}</label>
-            <span class="tag is-dark">{{this.remark}}</span>
+          <label class="label">RESULT: {{this.result}}</label>
+          <span class="tag is-dark">{{this.remark}}</span>
         </div>
-    </form>
+      </form>
     </div>
-    </div>
+  </div>
 </template>
 <script>
 const FEET_METERS = 3.28;
@@ -50,10 +48,10 @@ const INCHES_METERS = 0.0254;
 const CENTIMETERS_METERS = 100;
 const POUNDS_KILOGRAMS = 2.2046;
 
-const REMARK_UNDERWEIGHT='Underweight';
-const REMARK_NORMAL='Normal';
-const REMARK_OVERWEIGHT='Overweight';
-const REMARK_OBESITY='Obesity';
+const REMARK_UNDERWEIGHT = "Underweight";
+const REMARK_NORMAL = "Normal";
+const REMARK_OVERWEIGHT = "Overweight";
+const REMARK_OBESITY = "Obesity";
 
 export default {
   name: "bmi-calculator",
@@ -72,15 +70,15 @@ export default {
       return !this.formData.centimeters;
     },
     remarkClass() {
-        if (!this.remark) return '#fff';
-        if (this.remark === REMARK_UNDERWEIGHT) return '#f3e5f5';
-        if (this.remark === REMARK_NORMAL) return '#dcedc8';
-        if (this.remark === REMARK_OVERWEIGHT) return '#ffa0b6';
-        return '#ffb74d';
+      if (!this.remark) return "#fff";
+      if (this.remark === REMARK_UNDERWEIGHT) return "#f3e5f5";
+      if (this.remark === REMARK_NORMAL) return "#dcedc8";
+      if (this.remark === REMARK_OVERWEIGHT) return "#ffa0b6";
+      return "#ffb74d";
     },
     bmiStyle() {
-        return { backgroundColor: this.remarkClass };
-    },
+      return { backgroundColor: this.remarkClass };
+    }
   },
   data() {
     return {
@@ -96,7 +94,7 @@ export default {
       height: 0,
       weight: 0,
       result: null,
-      remark: null,
+      remark: null
     };
   },
   methods: {
