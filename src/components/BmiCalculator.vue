@@ -99,7 +99,6 @@ export default {
   },
   methods: {
     submit() {
-      const data = Object.assign({}, this.formData);
       if (!this.validate()) {
         return false;
       }
