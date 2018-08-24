@@ -1,6 +1,6 @@
 <template>
   <div class="columns is-centered">
-    <div class="column is-half card" :style="bmiStyle">
+    <div class="column is-half card bmi-container" :class="remarkClass">
       <div class="card-header-title is-centered is-size-4">BMI Calculator</div>
       <form @submit.prevent="submit" class="card-content">
         <div class="field">
@@ -30,8 +30,8 @@
         </div>
         <div>
           <div class="control">
-            <button class="button is-primary">Submit</button>&nbsp;
-            <button class="button" type="button" @click="reset">Reset</button>
+            <button type="submit" class="button is-primary">Submit</button>&nbsp;
+            <button type="button" class="button" @click="reset">Reset</button>
           </div>
         </div><br>
         <div v-if="this.result">
@@ -55,31 +55,6 @@ const REMARK_OBESITY = "Obesity";
 
 export default {
   name: "bmi-calculator",
-  computed: {
-    isFeet() {
-      return this.formData.heightUnit === "feet";
-    },
-    isKilograms() {
-      return this.formData.weightUnit === "kilograms";
-    },
-    isHeightEmpty() {
-      if (this.formData.heightUnit === "feet") {
-        return !this.formData.feet || !this.formData.inches;
-      }
-
-      return !this.formData.centimeters;
-    },
-    remarkClass() {
-      if (!this.remark) return "#fff";
-      if (this.remark === REMARK_UNDERWEIGHT) return "#f3e5f5";
-      if (this.remark === REMARK_NORMAL) return "#dcedc8";
-      if (this.remark === REMARK_OVERWEIGHT) return "#ffa0b6";
-      return "#ffb74d";
-    },
-    bmiStyle() {
-      return { backgroundColor: this.remarkClass };
-    }
-  },
   data() {
     return {
       formData: {
@@ -96,6 +71,28 @@ export default {
       result: null,
       remark: null
     };
+  },
+  computed: {
+    isFeet() {
+      return this.formData.heightUnit === "feet";
+    },
+    isKilograms() {
+      return this.formData.weightUnit === "kilograms";
+    },
+    isHeightEmpty() {
+      if (this.formData.heightUnit === "feet") {
+        return !this.formData.feet || !this.formData.inches;
+      }
+
+      return !this.formData.centimeters;
+    },
+    remarkClass() {
+      if (!this.remark) return "";
+      if (this.remark === REMARK_UNDERWEIGHT) return "underweight";
+      if (this.remark === REMARK_NORMAL) return "normal";
+      if (this.remark === REMARK_OVERWEIGHT) return "overweight";
+      return "obesity";
+    },
   },
   methods: {
     submit() {
@@ -154,4 +151,28 @@ export default {
     }
   }
 };
-</script>   
+</script> 
+
+<style lang="scss" scoped>      
+  .bmi-container {
+    background-color: transparent;
+    transition: ease 500ms background;
+    will-change: background;
+    
+    &.underweight {
+      background-color: #f3e5f5;
+    }
+    
+    &.normal {
+      background-color: #dcedc8;
+    }
+    
+    &.overweight {
+      background-color: #ffa0b6;
+    }
+    
+    &.obesity {
+      background-color: #ffb74d;
+    }
+   }
+</style>
